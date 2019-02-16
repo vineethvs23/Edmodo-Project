@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+	<div class="row">
+		
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+			<h3>Create Classroom</h3>
+			<br>
+			<form action="/core/classroom/{{user.username}}/" method="POST">
+				{% csrf_token %}
+				<div class="form-group">
+					<label for="first_name">Classroom name:</label>
+					<input type="text" class="form-control" value="{{classroom.classname}}" palceholder="classname"name="classname">
+				</div>
+				<div class="form-group">
+					<label for="first_name">Make invite code:</label>
+					<input type="text" class="form-control" value="{{classroom.classroom_invite}}" palceholder="classroom_invite" name="classroom_invite">
+				</div>
+				<button type="submit" class="btn btn-default">Create</button>
+			</form>
+			<br>
+			<h3>My Classes</h3>
+			{% for classroom in old_classrooms %}
+				<div class="panel panel-default">
+					<div class="panel-body">
+						{{classroom.classname}}
+						{{classroom.classroom_invite}}
+					</div>
+				</div>
+				
+			{% endfor %}
+			
+		</div>
+		<div class="col-md-2">
+		</div>
+		
+	</div>
+{% endblock %}

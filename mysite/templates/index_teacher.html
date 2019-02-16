@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+	<div class="container" style="padding: 15px;">
+		<div class="row" style="margin-bottom:150px">
+			<div class="col-md-1">
+				
+			</div>
+			<div class="col-md-3" style="background-color: #B9E2F3 ">
+				<div>
+					<div class="media">
+						<div class="media-left">
+							<a href="#">
+								{# <img class="media-object" src="..." alt="profile image" width=50px height=50px> #}
+							</a>
+						</div>
+						<div class="media-body">
+							<p class="media-heading"><a href="/profile/{{user.id}}/" style="color:black;"><style type="text/css">a:hover{text-decoration: none;}</style>{{user.first_name}} {{user.last_name}}</a></p>
+						</div>
+					</div>
+					<hr>
+					<p style="margin-bottom:50px">{{college_name}}</p>
+					<hr>
+				</div>
+				<div >
+					<nav style="margin-bottom:50px">
+						<h4>My Classes</h4>
+						<hr>
+						{% for name in classrooms %}
+							 <div class="panel panel-default">
+								<div class="panel-body"> 
+									{{name.classname}}
+								</div></div> 
+								{% endfor %}
+								<ul class="nav nav-pills nav-stacked">
+									{% for name in Classes %}
+										<li><a href="/?class={{ name.classname }}">{{ name.classname }}</a></li>
+									{% endfor %}
+								</ul>
+							</nav>
+						</div >
+							<br><br><br><br><br><br>
+					</div>
+					<div class="col-md-6">
+						<div class="w3-card" style="padding: 15px;">
+							<form action="/core/publish_post/" method="POST" >
+								{% csrf_token %}
+								<h3 style="text-align: center;color: #63A6EB;">Create A Post</h3>
+								<hr>
+								<input type="text" placeholder="post title" name="title" style="width:100%;"><br><br>
+								<textarea type="text"  placeholder="post body" name="body" rows="3" style="width:100%; resize:none;"></textarea>
+								<h5>Select the class</h5>
+								<select class="form-control" name='classroom'>
+									{% for classroom in classrooms %}
+										<option value={{classroom.pk}}>{{classroom.classname }}</option>
+									{% endfor %}
+								</select>
+								<br><br>
+								<button type="submit">Post</button>
+							</form>
+						</div>
+						<!-- <br>
+						<hr style="width:'5px' color:'black'">
+						<br>
+						{% for post in Posts %}
+									{% if post != None %}
+												<h4><a href="/profile/{{post.author.id}}" style="text-decoration:none">{{ post.author.first_name }}</a><small> Class: {{post.classroom}}</small></h4>
+												<h3>{{ post.title }}</h3>
+												<h5>{{ post.body }}</h5>
+												<br>
+												<small>{{post.timestamp}}</small>
+												<hr>
+									{% endif %}
+						{% endfor %}
+						-->
+						<div>
+							<hr>
+							<h3 style="text-align: center;color: #63A6EB;">Your Posts</h3>
+							{% for post in all_posts %}
+								<br>
+								<div class="w3-card" style="padding: 10px;">
+									<h4 style="text-align: left;">{{post.title}} </h4>
+									<hr>
+									<h5>{{post.body}}</h5>
+									<h6 style="text-align: right;">{{post.timestamp.date}}</h6>
+								</div>
+								<br>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="col-md-2" align="center">
+						<a href="/core/classroom/{{user.username}}"><button>Create Classroom</button></a>
+					</div>
+				</div>
+			</div>
+		{% endblock %}

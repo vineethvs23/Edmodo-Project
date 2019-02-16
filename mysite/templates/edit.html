@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+	<div class="row">
+		<div class="col-md-2">
+			
+		</div>
+		<div class="col-md-8">
+			<h1>{{user.first_name}} {{user.last_name}}</h1>
+			<form action="/core/profile/{{user.username}}/" method="POST">
+				{% csrf_token %}
+				<div class="form-group">
+					<label for="first_name">First Name:</label>
+					<input type="text" class="form-control" value="{{user.first_name}}" palceholder="{{user.first_name}}"name="firstname">
+				</div>
+				<div class="form-group">
+					<label for="last_name">Last Name:</label>
+					<input type="text" class="form-control" value="{{user.last_name}}" placeholder="{{user.last_name}}" name="lastname">
+				</div>
+				
+				<div class="form-group">
+					<label for="about">About:</label>
+					<input type="text" class="form-control" value="{{user_profile.about|safe}}" placeholder="{{user_profile.about|safe}}"name="aboutuser">
+				</div>
+				<div class="form-group">
+					<label for="skills">Skills:</label>
+					<input type="text" class="form-control" value="{{user_profile.skills|safe}}" placeholder="{{user_profile.skills|safe}}" name="userskills">
+				</div>
+				<div class="form-group">
+					<label for="education">Education:</label>
+					<input type="text" class="form-control" value="{{user_profile.education|safe}}" placeholder="{{user_profile.education|safe}}" name="usereducation">
+				</div>
+				<button type="submit" class="btn btn-default">Submit</button>
+			</form>
+		</div>
+		<div class="col-md-2">
+			
+		</div>
+	</div>
+{% endblock %}

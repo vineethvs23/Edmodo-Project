@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+	<div class="row" style="margin-top:40px">
+		<div class="col-md-4">
+			
+		</div>
+		<div class="col-md-4">
+			<div class="w3-card-4 w3-white">
+			<div style="border:1px solid #888888; border-radius:5px; padding:30px;">
+				
+				<h2>Sign Up</h2>
+				<hr>
+				{% if error %}
+					<div class="alert alert-danger" role="alert">{{error}}</div>
+				{% endif %}
+				<form method="POST", action="/core/signup/">
+					{% csrf_token %}
+					<div class="form-group">
+						<h4>Email:</h4>
+						<input class="form-control" type="Email" placeholder="Enter your Email" name="Email">
+					</div>
+					<div class="form-group">
+						<h4>Username:</h4>
+						<input class="form-control" type="text" placeholder="Enter your username" name="username">
+						{{show}}
+					</div>
+					<div class="form-group">
+						
+						<h4>Password:</h4>
+						<input  class="form-control" type="password" placeholder="Enter password" name="password">
+					</div>
+					
+					<select id = "myText" name = "college">
+						
+						{% for college in colleges %}
+							<option value="{{college.pk}}">{{college.college_name}}</option>
+						{% endfor %}
+						
+					</select>
+					<select name="user_type" onchange="schedule(this.value)" width="50%">
+						<option value="1">teacher</option>
+						<option value="2">student</option>
+						
+						
+					</select>
+					<div class="form-group">
+						<h4>Invite</h4>
+						<input class="form-control" type="text" placeholder="Enter Invite code" id="invite" name="invite_code">
+					</div>
+					
+					<br>
+					<button class="btn btn-default btn-md" type="submit">Sign up</button><hr>
+					<p>If you have an account <a href="/core/signin/">Login here.</a></p>
+				</form>
+			</div>
+		</div>
+		</div>
+		<div class="col-md-4">
+			
+		</div>
+	</div>
+	<script>
+				function schedule(value){
+				if (value==2)
+				{
+				document.getElementById("myText").disabled = true;
+				document.getElementById("invite").disabled =true;
+				}
+				else
+				{
+					document.getElementById("invite").disabled =false;
+				document.getElementById("myText").disabled = false;
+				}
+				}
+	</script>
+{% endblock %}
