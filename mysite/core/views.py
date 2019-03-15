@@ -4,7 +4,31 @@ from core.models import Classroom,NewPost,Profile,College,Students
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout,login
 	
-# Create your views here.
+"""
+VIEWS
+
+index_teacher: this view is used to get all posts that a teacher has made for all classrooms and all the classrooms that the teacher has made
+
+index_student: this view is used to get all the posts that are present. 
+
+signup: this view is used to take in user details and also checks if user already exists.
+		It also creates a user teacher or student based on the user_type that has been selected.
+
+Signin: Authenticates user and allows access to index/homepage
+
+signout: user logout
+
+editprofile: users Can change their details one logged in
+
+create_classroom: Only for user_type = 1 , the user can create a classroom with name and create a invite code for the class as well.
+
+join_classroom: only for user_type = 2, the user can join a classroom given they have invite code and classroom name.
+
+Create_post: Only for user_type = 1, teachers can create a post and link each post to a certain classroom as well.
+
+
+
+"""
 
 def index_teacher(request,username):
 	
@@ -14,16 +38,12 @@ def index_teacher(request,username):
 
 	return render(request,"index_teacher.html",{"classrooms":classrooms,"all_posts":all_posts})
 
+
 def index_student(request,username):
 
 	user = request.user
 	all_posts = NewPost.objects.all()
 	students = Students.objects.filter(user = user)
-
-
-
-
-
 
 	return render(request, "index_student.html",{"students":students, "user":user,"all_posts":all_posts})
 
@@ -135,8 +155,11 @@ def signin(request):
 
 	return render(request, "signin.html")
 
+
 def signout(request):	
+	
 	logout(request)
+	
 	return redirect('/core/signin/')
 
 
@@ -196,6 +219,7 @@ def create_classroom(request,username):
 
 	return render(request,"classroom.html",{"old_classrooms":old_classrooms})
 
+
 def join_classroom(request,username):
 
 	user = request.user
@@ -228,7 +252,10 @@ def join_classroom(request,username):
 
 	return render(request, "join_classroom.html",{"classrooms":all_classrooms, "user":user})
 
+
+
 def create_post(request):
+	
 	user = request.user
 
 	if request.method == "POST":

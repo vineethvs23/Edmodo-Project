@@ -3,7 +3,7 @@ from django.urls import path
 from core import views
 
 
-# Create your views here.
+
 urlpatterns = [
 		path("index_teacher/<slug:username>/",views.index_teacher),
 		path("index_student/<slug:username>/",views.index_student),
